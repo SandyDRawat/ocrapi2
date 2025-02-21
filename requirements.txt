@@ -47,3 +47,5 @@ uvicorn==0.34.0
 runpod
 bitsandbytes
 accelerate
+huggingface_hub
+python-dotenv

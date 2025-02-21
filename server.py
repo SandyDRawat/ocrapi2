@@ -7,7 +7,7 @@ import os
 from base64 import b64decode
 
 # Define local model path
-MODEL_PATH = "/app/model"
+MODEL_PATH = "/app/model/MiniCPM-V-2_6-int4"
 
 # Check if GPU is available
 device = "cuda" if torch.cuda.is_available() else "cpu"
