@@ -9,4 +9,4 @@ RUN pip install -r requirements.txt
 COPY . /app
 
 # Run the serverless handler
-CMD ["python", "server.py"]
+CMD ["python3","u", "server.py"]
