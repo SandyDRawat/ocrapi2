@@ -12,7 +12,7 @@ def handler(event):
     question = input.get('question')
     image64 = input.get('image')
     image = Image.open(BytesIO(b64decode(image64)))
-    seconds = input.get('seconds', 0)
+    #seconds = input.get('seconds', 0)
 
     MODEL_PATH = "/app/model/MiniCPM-V-2_6-int4"
     # Check if GPU is available
@@ -39,8 +39,8 @@ def handler(event):
     
     answer = model.chat(image=None, msgs=msgs, tokenizer=tokenizer)
 
-    time.sleep(seconds)
+    #time.sleep(seconds)
     return {"answer": "".join(answer)}
 
-if __name__ == '__main__':
-    runpod.serverless.start({'handler': handler})
+
+runpod.serverless.start({'handler': handler})
