@@ -11,7 +11,7 @@ def handler(event):
     input = event['input']
     question = input.get('question')
     image64 = input.get('image')
-    image = Image.open(BytesIO(b64decode(image64)))
+    image = Image.open(BytesIO(b64decode(image64))).convert("RGB") # Ensure image is RGB
     #seconds = input.get('seconds', 0)
 
     MODEL_PATH = "/app/model/MiniCPM-V-2_6-int4"
@@ -35,12 +35,12 @@ def handler(event):
         exit(1)
 
     # Prepare input
-    msgs = [{"role": "user", "content": [image, question]}]
-    
-    answer = model.chat(image=None, msgs=msgs, tokenizer=tokenizer)
+    inputs = processor(images=image, return_tensors="pt").to(device)
+    msgs = [{"role": "user", "content": [inputs['pixel_values'], question]}]
+
+    answer = model.chat(image=inputs['pixel_values'], msgs=msgs, tokenizer=tokenizer)
 
     #time.sleep(seconds)
     return {"answer": "".join(answer)}
-
 
 runpod.serverless.start({'handler': handler})

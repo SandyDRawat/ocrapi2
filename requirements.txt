@@ -49,3 +49,4 @@ bitsandbytes
 accelerate
 huggingface_hub
 python-dotenv
+torchvision
