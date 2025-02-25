@@ -8,7 +8,7 @@ dotenv.load_dotenv()
 
 RP_API_KEY =  os.getenv("RP_API_KEY") 
 
-def send_request(image_path, question, url="https://api.runpod.ai/v2/l32k9po3kztez6/runsync"): # change the url to your server url
+def send_request(image_path, question, url="https://api.runpod.ai/v2/5w32qga6s6ha8l/runsync"): # change the url to your server url
     # Convert image to base64
     with open(image_path, "rb") as img_file:
         base64_image = base64.b64encode(img_file.read()).decode("utf-8")

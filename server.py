@@ -20,9 +20,9 @@ def handler(event):
 
     # Load model, tokenizer, and processor from local path
     def load_local_model(model_path: str, device: str):
-        model = AutoModel.from_pretrained(model_path)
-        tokenizer = AutoTokenizer.from_pretrained(model_path)
-        processor = AutoProcessor.from_pretrained(model_path)
+        model = AutoModel.from_pretrained(model_path,trust_remote_model=True)
+        tokenizer = AutoTokenizer.from_pretrained(model_path,trust_remote_model=True)
+        processor = AutoProcessor.from_pretrained(model_path,trust_remote_model=True)
         return model, tokenizer, processor
 
     # Load model at startup
