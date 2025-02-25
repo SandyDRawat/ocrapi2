@@ -11,7 +11,7 @@ def handler(event):
     input = event['input']
     question = input.get('question')
     image64 = input.get('image')
-    image = Image.open(BytesIO(b64decode(image64))).convert("RGB") # Ensure image is RGB
+    image = Image.open(BytesIO(b64decode(image64)))
     #seconds = input.get('seconds', 0)
 
     MODEL_PATH = "/app/model/MiniCPM-V-2_6-int4"
@@ -20,9 +20,9 @@ def handler(event):
 
     # Load model, tokenizer, and processor from local path
     def load_local_model(model_path: str, device: str):
-        model = AutoModel.from_pretrained(model_path,trust_remote_model=True)
-        tokenizer = AutoTokenizer.from_pretrained(model_path,trust_remote_model=True)
-        processor = AutoProcessor.from_pretrained(model_path,trust_remote_model=True)
+        model = AutoModel.from_pretrained(model_path,trust_remote_code=True)
+        tokenizer = AutoTokenizer.from_pretrained(model_path,trust_remote_code=True)
+        processor = AutoProcessor.from_pretrained(model_path,trust_remote_code=True)
         return model, tokenizer, processor
 
     # Load model at startup
@@ -35,12 +35,12 @@ def handler(event):
         exit(1)
 
     # Prepare input
-    inputs = processor(images=image, return_tensors="pt").to(device)
-    msgs = [{"role": "user", "content": [inputs['pixel_values'], question]}]
-
-    answer = model.chat(image=inputs['pixel_values'], msgs=msgs, tokenizer=tokenizer)
+    msgs = [{"role": "user", "content": [image, question]}]
+    
+    answer = model.chat(image=None, msgs=msgs, tokenizer=tokenizer)
 
     #time.sleep(seconds)
     return {"answer": "".join(answer)}
+
 
 runpod.serverless.start({'handler': handler})
